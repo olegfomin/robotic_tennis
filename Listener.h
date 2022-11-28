@@ -9,15 +9,15 @@ class Listener {
 };
 
 /* This listener acts like mometory switch and it invokes digitalWrite(pinContactNumber, HIGH) when param='0' thus period1 starts */
-class MomentarySwitchListener : public Listener {
+class MomrSwitLisr : public Listener {
   private:
-    int pinContactNumber=0;
+    int pcn=0;
     char* zero = const_cast<char*>("0");
     char* one  = const_cast<char*>("1");
   public: 
-    MomentarySwitchListener(int pinContactNumber);
-    virtual void onEvent(unsigned int tickNumber, char* entryName, char* param);
-    ~MomentarySwitchListener(); 
+    MomrSwitLisr(int pinContactNumber);
+    virtual void onEvent(unsigned int tn, char* entryName, char* param);
+    ~MomrSwitLisr(); 
 };
 
 

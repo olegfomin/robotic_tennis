@@ -7,13 +7,12 @@ void Listener::onEvent(unsigned int tickNumber, char* entryName, char* param) {
 };
 
 
-/*                             */
-MomentarySwitchListener::MomentarySwitchListener(int pinContactNumber) {
-  this->pinContactNumber = pinContactNumber;
+/* Constuctor storing Pin Contact Number as an attribute */
+MomrSwitLisr::MomrSwitLisr(int pcn) {
+  this->pcn = pcn;
 }
 
-void MomentarySwitchListener::onEvent(unsigned int tickNumber, char* entryName, char* param) {
-  Serial.println(param);
+void MomrSwitLisr::onEvent(unsigned int tn, char* entryName, char* param) {
   int result = strcmp (param, zero);
-  digitalWrite(pinContactNumber, result==0 ? HIGH : LOW);
+  digitalWrite(pcn, result==0 ? HIGH : LOW);
 }

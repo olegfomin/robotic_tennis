@@ -3,41 +3,53 @@
  *  No variable name can exceed 13 characters in length here below is an accepted dictionary of contractions. It is allowed using entire word instead of contraction i9f the entire word length do not exceed 13 characters  
  *  
  *  Dictionary of contructions in variable names: 
- *  
- *  reg - registry             crnt - current
- *  swit - switch              prid - period
- *  lisr - listener            nm   - name
- *  tm   - time                mk   - make
- *  momr - momentary           str  - string
- *  cmp  - compare             res  - result
- *  ent  - entry
+ * 
+ *  arr  - array 
+ *  blnk - blick
+ *  crnt - current
  *  cntr - counter
  *  conr - controller
+ *  cmp  - compare
+ *  ent  - entry
+ *  engd - engaged
+ *  lisr - listener
+ *  mk   - make
+ *  momr - momentary
+ *  nm   - name
+ *  pcn  - Pin Contact Number (Arduino or RPi depending on context)
+ *  prid - period
+ *  reg - registry             
+ *  res  - result
+ *  str  - string
+ *  swit - switch              
+ *  tm   - time                
+ *  tn   - tick number (counter that stores the number of times the Arduino loop() got called)
+ *  It is allowed to use full names for any of the words above provided the compound length will not exceed 13 characters
+ *  The static final entries can use this contractions if their length exceed 21 charcters, otherwise contractions must be used 
  *  
 */
 
-#include "TimeListenerRegistry.h"
-#include "TimeListenerEntry.h"
+#include "TmLisrReg.h"
+#include "TmLisrEnt.h"
 #include "Listener.h"
 #include "Setup.h"
 
 
-TimeListenerRegistry* tmLisrReg = new TimeListenerRegistry();
-MomentarySwitchListener* momrSwitLisr52 = new MomentarySwitchListener(52);
-TimeListenerEntry* tmLisrEnt52 = new TimeListenerEntry("LED52", 1000, 250, momrSwitLisr52); 
+TmLisrReg* tmLisrReg = new TmLisrReg();
+MomrSwitLisr* momrSwitLisr52 = new MomrSwitLisr(52);
+TmLisrEnt* tmLisrEnt52 = new TmLisrEnt("LED52", 1000, 250, momrSwitLisr52); 
 
-MomentarySwitchListener* momrSwitLisr49 = new MomentarySwitchListener(49);
-TimeListenerEntry* tmLisrEnt49 = new TimeListenerEntry("LED49", 50, momrSwitLisr49); 
-
+MomrSwitLisr* momrSwitLisr49 = new MomrSwitLisr(49);
+TmLisrEnt*    tmLisrEnt49 = new TmLisrEnt("LED49", 50, momrSwitLisr49); 
 
 unsigned int tickCntr = 0;
 
 void setup() {
 tmLisrEnt52->activate();
-tmLisrReg->registerEntry(tmLisrEnt52);
-tmLisrReg->registerEntry(tmLisrEnt49);
+tmLisrReg->regEntry(tmLisrEnt52);
+tmLisrReg->regEntry(tmLisrEnt49);
 
-TimeListenerEntry* timeEntry = tmLisrReg->findByName("LED52");
+TmLisrEnt* timeEntry = tmLisrReg->findByName("LED52");
 if(timeEntry != NULL) timeEntry->activate(5);
 
 /*tmLisrEnt49->activate();

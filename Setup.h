@@ -26,13 +26,13 @@ char* MOTOR_POWER_RELAY = const_cast<char*>("PIN6");
 char* R2_RELAY          = const_cast<char*>("PIN5");
 
 // Creates the registry and prepopulates with all needed entries inside 
-TimeListenerRegistry* setupEnv() {
-  TimeListenerRegistry* tmLisrReg = new TimeListenerRegistry();
+ TmLisrReg* setupEnv() {
+  TmLisrReg* tmLisrReg = new TmLisrReg();
   // PIN 52
-  MomentarySwitchListener* momrSwitLisrBlink = new MomentarySwitchListener(LEFT_REAR_LED_PIN); 
-  TimeListenerEntry* tmLisrEntBlink = new TimeListenerEntry(LEFT_REAR_LED_BLINK, BLINK_INTERVAL, momrSwitLisrBlink);
-  tmLisrReg->registerEntry(tmLisrEntBlink);
-  MomentarySwitchListener* momrSwitLisrStop = new MomentarySwitchListener(LEFT_REAR_LED_PIN); 
+  MomrSwitLisr* momrSwitLisrBlink = new MomrSwitLisr(LEFT_REAR_LED_PIN); 
+  TmLisrEnt* tmLisrEntBlink = new TmLisrEnt(LEFT_REAR_LED_BLINK, BLINK_INTERVAL, momrSwitLisrBlink);
+  tmLisrReg->regEntry(tmLisrEntBlink);
+  MomrSwitLisr* momrSwitLisrStop = new MomrSwitLisr(LEFT_REAR_LED_PIN); 
 //  TimeListenerEntry* tmLisrEntStop = new TimeListenerEntry(LEFT_REAR_LED_STOP, STOP_INTERVAL_OFF, STOP_INTERVAL_ON, momrSwitLisrBlink);
 //  tmLisrReg->registerEntry(tmLisrEntStop);
   
