@@ -13,7 +13,9 @@ class TimeListenerRegistry {
   public:  
     TimeListenerRegistry();
     bool registerEntry(TimeListenerEntry* timeListenerEntry);
-    void feed(unsigned int tickNumber);   
+    void feed(unsigned int tickNumber);
+    /* Finding the entry by a unique name */
+    TimeListenerEntry* findByName(char const *tmEntryName);    
 };
 
 #endif

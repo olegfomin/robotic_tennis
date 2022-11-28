@@ -19,3 +19,15 @@ void TimeListenerRegistry::feed(unsigned int tickNumber) {
       timeListenerArray[i]->feed(tickNumber);
   };
 };
+
+TimeListenerEntry* TimeListenerRegistry::findByName(char const* tmEntNm) {
+  TimeListenerEntry* result = NULL;  
+  for(int i=0; i < size; i++) {
+    int cmpRes = strcmp(tmEntNm,timeListenerArray[i]->getEntryName());
+    if(cmpRes == 0) {
+      result = timeListenerArray[i];
+      break;
+    };
+  };
+  return result;
+};

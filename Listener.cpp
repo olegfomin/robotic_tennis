@@ -13,6 +13,7 @@ MomentarySwitchListener::MomentarySwitchListener(int pinContactNumber) {
 }
 
 void MomentarySwitchListener::onEvent(unsigned int tickNumber, char* entryName, char* param) {
+  Serial.println(param);
   int result = strcmp (param, zero);
   digitalWrite(pinContactNumber, result==0 ? HIGH : LOW);
 }

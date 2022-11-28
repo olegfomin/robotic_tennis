@@ -1,14 +1,15 @@
 /* 
  *  Agreement
- *  No variable name can exceed 13 characters in length here below is an accepted dictionary of contractions 
+ *  No variable name can exceed 13 characters in length here below is an accepted dictionary of contractions. It is allowed using entire word instead of contraction i9f the entire word length do not exceed 13 characters  
  *  
  *  Dictionary of contructions in variable names: 
  *  
  *  reg - registry             crnt - current
  *  swit - switch              prid - period
- *  lisr - listener
- *  tm   - time
- *  momr - momentary
+ *  lisr - listener            nm   - name
+ *  tm   - time                mk   - make
+ *  momr - momentary           str  - string
+ *  cmp  - compare             res  - result
  *  ent  - entry
  *  cntr - counter
  *  conr - controller
@@ -18,19 +19,29 @@
 #include "TimeListenerRegistry.h"
 #include "TimeListenerEntry.h"
 #include "Listener.h"
+#include "Setup.h"
 
 
 TimeListenerRegistry* tmLisrReg = new TimeListenerRegistry();
-MomentarySwitchListener* momrSwitLisr = new MomentarySwitchListener(52);
-TimeListenerEntry* tmLisrEnt = new TimeListenerEntry("LED52", 0, 100, momrSwitLisr); 
+MomentarySwitchListener* momrSwitLisr52 = new MomentarySwitchListener(52);
+TimeListenerEntry* tmLisrEnt52 = new TimeListenerEntry("LED52", 1000, 250, momrSwitLisr52); 
 
+MomentarySwitchListener* momrSwitLisr49 = new MomentarySwitchListener(49);
+TimeListenerEntry* tmLisrEnt49 = new TimeListenerEntry("LED49", 50, momrSwitLisr49); 
 
 
 unsigned int tickCntr = 0;
 
 void setup() {
-tmLisrEnt->activate();
-tmLisrReg->registerEntry(tmLisrEnt);
+tmLisrEnt52->activate();
+tmLisrReg->registerEntry(tmLisrEnt52);
+tmLisrReg->registerEntry(tmLisrEnt49);
+
+TimeListenerEntry* timeEntry = tmLisrReg->findByName("LED52");
+if(timeEntry != NULL) timeEntry->activate(5);
+
+/*tmLisrEnt49->activate();
+*/
   
   //  LED to PIN Map:
 /*************/
