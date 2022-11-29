@@ -33,6 +33,17 @@
 #include "TmLisrEnt.h"
 #include "Listener.h"
 #include "Setup.h"
+#include "ReliableButton.h"
+#include "SimpleMenu.h"
+#include "lcd16x2.h"
+
+ReliableButton* rbUp = new ReliableButton(buttonUp); 
+ReliableButton* rbEnter = new ReliableButton(buttonEnter); 
+ReliableButton* rbDown = new ReliableButton(buttonDown);
+SimpleMenu* menu = new SimpleMenu(); 
+Lcd16x2* lcd = new Lcd16x2();
+
+
 
 
 TmLisrReg* tmLisrReg = new TmLisrReg();
@@ -113,7 +124,23 @@ if(timeEntry != NULL) timeEntry->activate(5);
   pinMode(6, OUTPUT); // The Motor power Relay (R3)
   pinMode(5, OUTPUT); // The Reserved R2 Relay (Speakers?)
 
+  
+
   Serial.begin(9600);
+
+  lcd->init();
+  
+
+//  Serial.println(cointing.c_str);
+
+  attachInterrupt(digitalPinToInterrupt(2),buttonPressedUp,HIGH);
+  attachInterrupt(digitalPinToInterrupt(3),buttonPressedEnter,HIGH);
+  attachInterrupt(digitalPinToInterrupt(11),buttonPressedDown,HIGH);
+
+  pinMode(8, OUTPUT);
+  digitalWrite(8, HIGH);   // turn the LED on (HIGH is the voltage level)
+  delay(1000);    
+  
 
 }
 
