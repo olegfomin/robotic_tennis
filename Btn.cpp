@@ -1,11 +1,10 @@
-#include "ReliableButton.h"
+#include "Btn.h"
 
-ReliableButton::ReliableButton(buttonDownFunction f) {
-  ; // button pressed function argument 
+Btn::Btn(buttonDownFunction f) {
   buttonDown = f;
 }
 
-void ReliableButton::synch(int mainCounter) {
+void Btn::synch(int mainCounter) {
   if(start_counter == 0) start_counter = mainCounter;
   if(mainCounter - start_counter > TRANSACTION_COMPLETED_ON_COUNTER) { 
     start_counter = mainCounter;
@@ -13,17 +12,17 @@ void ReliableButton::synch(int mainCounter) {
   }
 }
 
-void ReliableButton::pressReceived(int mainCounter) {
+void Btn::pressReceived(int mainCounter) {
    isButtonToBePressed = true;
 }
 
-void ReliableButton::buttonPressed() {
+void Btn::buttonPressed() {
      buttonDown();
      isButtonToBePressed = false;
      reset();
 }
 
-void ReliableButton::reset() {
+void Btn::reset() {
     start_counter=0;
     isButtonToBePressed = false;
 }

@@ -7,7 +7,7 @@ using namespace std;
 
 class Lcd16x2 {
   private:
-    int DEFAULT_CYCLES_TO_LIGHT = 50;
+    static const int DEFAULT_CYCLES_TO_LIGHT = 50;
     bool   isDirty = false;
     bool   playSound = false;
     bool   lightIsOn = false;

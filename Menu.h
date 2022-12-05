@@ -1,5 +1,5 @@
-#ifndef simpleMenu_h
-#define simpleMenu_h
+#ifndef Menu_h
+#define Menu_h
 
 #include <vector>
 #include <Arduino.h>
@@ -14,7 +14,7 @@ struct TwoElements {
   int positionNumber = 0;
 };
 
-class SimpleMenu {
+class Menu {
   private:
     char marker = '>';
     int pointer = 1; // pointer for the marker
@@ -26,7 +26,7 @@ class SimpleMenu {
   public:   
     TwoElements* valueAtCurrentPosition();
 
-    SimpleMenu(); 
+    Menu(); 
 
     TwoElements* moveUp();
 

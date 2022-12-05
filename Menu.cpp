@@ -1,7 +1,7 @@
-#include "SimpleMenu.h"
+#include "Menu.h"
 
 
-  SimpleMenu::SimpleMenu() {
+  Menu::Menu() {
     allItems.clear();
     
     allItems.push_back(" Reached borders");
@@ -45,14 +45,13 @@
 
   };
 
-  void SimpleMenu::testPrint(TwoElements* twoElements) {
+  void Menu::testPrint(TwoElements* twoElements) {
    Serial.println(twoElements->line1);
    Serial.println(twoElements->line2);
   }; 
 
-  TwoElements* SimpleMenu::valueAtCurrentPosition() {
+  TwoElements* Menu::valueAtCurrentPosition() {
     TwoElements* theTwoElements = new TwoElements();
-//    Serial.println(currentPosition);
 
     pointer = currentPosition;
     
@@ -72,25 +71,22 @@
     }
     
     theTwoElements->positionNumber= pointer; 
-//    testPrint(theTwoElements);
     
     return theTwoElements; 
     
   };
 
-  TwoElements* SimpleMenu::moveUp() {
+  TwoElements* Menu::moveUp() {
     if(currentPosition > 0) currentPosition--;
     return valueAtCurrentPosition();
   };
 
-  TwoElements* SimpleMenu::moveDown(){
+  TwoElements* Menu::moveDown(){
     if(currentPosition < allItems.size()-2) currentPosition++;
     return valueAtCurrentPosition();
   };
 
-
-
-  int SimpleMenu::size() {
+  int Menu::size() {
      return allItems.size();
   };
 
