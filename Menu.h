@@ -6,7 +6,7 @@
 
 using namespace std;
 
-struct TwoElements {
+struct TwoElms {
   public:
   char line1[21]={0};
   char line2[21]={0};
@@ -24,13 +24,13 @@ class Menu {
     void testPrint(TwoElements* twoElements);
 
   public:   
-    TwoElements* valueAtCurrentPosition();
+    TwoElms* valueAtCurrentPosition();
 
     Menu(); 
 
-    TwoElements* moveUp();
+    TwoElms* moveUp();
 
-    TwoElements* moveDown();
+    TwoElms* moveDown();
 }; 
 
 #endif

@@ -13,6 +13,7 @@
  *  cmp  - compare
  *  enr  - enter
  *  ent  - entry
+ *  elm  - element
  *  engd - engaged
  *  lisr - listener
  *  mk   - make
@@ -22,7 +23,8 @@
  *  obsr - Observer
  *  pcn  - Pin Contact Number (Arduino or RPi depending on context)
  *  prid - period
- *  reg - registry             
+ *  prs  - press
+ *  reg -  registry             
  *  res  - result
  *  str  - string
  *  stat - static
@@ -39,18 +41,14 @@
 #include "Listener.h"
 #include "Setup.h"
 #include "Btn.h"
-#include "SimpleMenu.h"
+#include "Menu.h"
 #include "lcd16x2.h"
 
 /*ReliableButton* rbUp = new ReliableButton(buttonUp); 
 ReliableButton* rbEnter = new ReliableButton(buttonEnter); 
 ReliableButton* rbDown = new ReliableButton(buttonDown);*/
-SimpleMenu* menu = new SimpleMenu(); 
+Menu* menu = new Menu(); 
 Lcd16x2* lcd = new Lcd16x2();
-
-
-
-
 
 TmLisrReg* tmLisrReg = new TmLisrReg();
 MomrSwitLisr* momrSwitLisr52 = new MomrSwitLisr(52);
@@ -163,13 +161,9 @@ if(timeEntry != NULL) timeEntry->activate(5);
  *              **************************************         *
 /***************************************************************/
 
-  
-  
-
-
-  attachInterrupt(digitalPinToInterrupt(9), onUpBtnPress, HIGH);
-//  attachInterrupt(digitalPinToInterrupt(3), buttonPressedEnter, HIGH);
-//  attachInterrupt(digitalPinToInterrupt(11),buttonPressedDown, HIGH);
+  attachInterrupt(digitalPinToInterrupt(9),  onUpBtnPrs, HIGH);
+  attachInterrupt(digitalPinToInterrupt(10), onEnrBtnPrs, HIGH);
+  attachInterrupt(digitalPinToInterrupt(11), onDownBtnPrs, HIGH);
 
 /*  pinMode(8, OUTPUT);
   digitalWrite(8, HIGH);   // turn the LED on (HIGH is the voltage level)
@@ -195,6 +189,14 @@ void loop() {
   delay(5);
 }
 
-void onUpBtnPress() {
-  btnUpLisr->onEvent(tickCntr, "upButton", "");
+void onUpBtnPrs() {
+  btnUpLisr->onEvent(tickCntr, "UpButton", "");
+}
+
+void onEnrBtnPrs() {
+  btnEnrLisr->onEvent(tickCntr, "EnterButton", "");
+}
+
+void onDownBtnPrs() {
+  btnDownLisr->onEvent(tickCntr, "DownButton", "");
 }
