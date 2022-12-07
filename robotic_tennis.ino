@@ -15,6 +15,7 @@
  *  ent  - entry
  *  elm  - element
  *  engd - engaged
+ *  idx  - index
  *  lisr - listener
  *  mk   - make
  *  momr - momentary
@@ -22,6 +23,7 @@
  *  oble - Observable
  *  obsr - Observer
  *  pcn  - Pin Contact Number (Arduino or RPi depending on context)
+ *  pos  - position 
  *  prid - period
  *  prs  - press
  *  reg -  registry             
@@ -40,7 +42,6 @@
 #include "TmLisrEnt.h"
 #include "Listener.h"
 #include "Setup.h"
-#include "Btn.h"
 #include "Menu.h"
 #include "lcd16x2.h"
 
@@ -57,9 +58,9 @@ TmLisrEnt* tmLisrEnt52 = new TmLisrEnt("LED52", 1000, 250, momrSwitLisr52);
 MomrSwitLisr* momrSwitLisr49 = new MomrSwitLisr(49);
 TmLisrEnt*    tmLisrEnt49 = new TmLisrEnt("LED49", 50, momrSwitLisr49);
 
-BtnUpLisr* btnUpLisr   = new BtnUpLisr(9);
-BtnDownLisr* btnDownLisr = new BtnDownLisr(10);
-BtnEnrLisr* btnEnrLisr  = new BtnEnrLisr(11);
+BtnUpLisr* btnUpLisr     = new BtnUpLisr(menu, lcd);
+BtnDownLisr* btnDownLisr = new BtnDownLisr(menu, lcd);
+BtnEnrLisr* btnEnrLisr   = new BtnEnrLisr(menu, lcd);
 
 unsigned int tickCntr = 0;
 
@@ -136,7 +137,10 @@ if(timeEntry != NULL) timeEntry->activate(5);
 
   
 
-  Serial.begin(9600);
+  Serial.begin(9600); // Debugging UART
+  Serial3.begin(9600); //Menu's Lcd16x2 UART
+  delay(1000);
+  
 
 //  lcd->init();
 
@@ -161,9 +165,9 @@ if(timeEntry != NULL) timeEntry->activate(5);
  *              **************************************         *
 /***************************************************************/
 
-  attachInterrupt(digitalPinToInterrupt(9),  onUpBtnPrs, HIGH);
-  attachInterrupt(digitalPinToInterrupt(10), onEnrBtnPrs, HIGH);
-  attachInterrupt(digitalPinToInterrupt(11), onDownBtnPrs, HIGH);
+  attachInterrupt(digitalPinToInterrupt(9),  onUpBtnPrs, RISING);   // Top button (Up)
+  attachInterrupt(digitalPinToInterrupt(10), onEnrBtnPrs, RISING);  // Middle button (enter)
+  attachInterrupt(digitalPinToInterrupt(11), onDownBtnPrs, RISING); // Bottom button (down)
 
 /*  pinMode(8, OUTPUT);
   digitalWrite(8, HIGH);   // turn the LED on (HIGH is the voltage level)
@@ -173,16 +177,6 @@ if(timeEntry != NULL) timeEntry->activate(5);
 }
 
 void loop() {
-/*  Serial3.write(12);
-  delay(10);
-  Serial3.write(22);
-  delay(10);
-  Serial3.write("Line one");
-  Serial3.write("Line two");
-  Serial3.write(12);
-  delay(1000); */
- 
-
   
   tmLisrReg->feed(tickCntr);
   tickCntr++;

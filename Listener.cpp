@@ -20,24 +20,25 @@ void MomrSwitLisr::onEvent(unsigned int tn, char* entryName, char* param) {
   digitalWrite(pcn, result==0 ? HIGH : LOW);
 }
 
-BtnUpLisr::BtnUpLisr(int pcn) {
-   this->pcn = pcn;
+BtnLisr::BtnLisr(Menu* menu, Lcd16x2* lcd16x2) {
+  this->menu = menu;
+  this->lcd16x2 = lcd16x2;
+};
+
+
+BtnUpLisr::BtnUpLisr(Menu* menu, Lcd16x2* lcd16x2) : BtnLisr(menu, lcd16x2)  {
 };
 
 BtnUpLisr::~BtnUpLisr() {
 
 };
 
-BtnDownLisr::BtnDownLisr(int pcn) {
-   this->pcn = pcn;   
+BtnDownLisr::BtnDownLisr(Menu* menu, Lcd16x2* lcd16x2) : BtnLisr(menu, lcd16x2) {
 };
 
 
-BtnEnrLisr::BtnEnrLisr(int pcn) {
-   this->pcn = pcn;
+BtnEnrLisr::BtnEnrLisr(Menu* menu, Lcd16x2* lcd16x2) : BtnLisr(menu, lcd16x2) {
 };
-
-
 
 /* When the button UP is pushed this method is called.  */
 void BtnUpLisr::onEvent(unsigned int tn, char* entryName, char* param) {
