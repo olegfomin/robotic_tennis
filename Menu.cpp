@@ -3,47 +3,50 @@
 
 
   Menu::Menu() {
-    allItems.clear();
     
-    allItems.push_back(" Left speed 3"); // 
-    allItems.push_back(" Left speed 5");
-    allItems.push_back(" Left speed 8");
-    allItems.push_back(" Left speed 13");
-    allItems.push_back(" Left speed 21");
-    allItems.push_back(" Left speed 34"); // 
-    
-    allItems.push_back(" Right speed 3"); // 
-    allItems.push_back(" Right speed 5"); // 
-    allItems.push_back(" Right speed 8"); // 
-    allItems.push_back(" Right speed 13"); // 
-    allItems.push_back(" Right speed 21"); // 
-    allItems.push_back(" Right speed 34"); // 
-    
-    allItems.push_back(" Time 8 second"); // 
-    allItems.push_back(" Time 13 second"); // 
-    allItems.push_back(" Time 21 second"); // 
-    allItems.push_back(" Time 34 second"); // 
-    allItems.push_back(" Time 55 second"); // 
-    allItems.push_back(" Time 89 second"); // 
-    allItems.push_back(" Time 144 secnd"); // 
-
-    allItems.push_back(" Direct forward");
-    allItems.push_back(" Direct backwrd");
-    allItems.push_back(" Stop");
-    
-
-    allItems.push_back(" Then ...");
-    allItems.push_back(" Reset"); 
-    allItems.push_back(" Start in 3 sec"); // Default speed 5,13,21,forward
-    allItems.push_back(" Show route"); 
+    allItems[0] = " To From 8ft"; // Straignt going to and then returning from
+    allItems[1]=" To From 13ft";
+    allItems[2]=" To From 21ft";
+    allItems[3]=" To From 34ft";
+    allItems[4]=" To From 55ft";
+    allItems[5]=" Right turn 8ft"; // start sharp turn rigth
+    allItems[6]=" Right turn 13ft"; // 
+    allItems[7]=" Right turn 21ft"; // 
+    allItems[8]=" Right turn 34ft"; // 
+    allItems[9]=" Rigth turn 55ft"; // start long turn rigth
+    allItems[10]=" Left turn 8ft"; // start sharp turn left
+    allItems[11]=" Left turn 13ft"; // 
+    allItems[12]=" Left turn 21ft"; // 
+    allItems[13]=" Left turn 34ft"; // 
+    allItems[14]=" Left turn 55ft"; // start long turn left 
+    allItems[15]=" Circle 13ft cw"; // Making 3 circles 13ft clock wise 
+    allItems[16]=" Circle 21ft cw"; // 
+    allItems[17]=" Circle 34ft cw"; // 
+    allItems[18]=" Circle 13ft acw"; // Making 3 circles 13ft anti-clock wise
+    allItems[19]=" Circle 21ft acw"; // 
+    allItems[20]=" Circle 34ft acw"; // 
+    allItems[21]=" Serpent > 21ft"; // Serpentine route starting with turn right 
+    allItems[22]=" Serpent > 34ft"; // 
+    allItems[23]=" Serpent > 55ft"; //
+    allItems[24]=" Serpent < 21ft"; // Serpentine route starting with turn left 
+    allItems[25]=" Serpent < 34ft"; // 
+    allItems[26]=" Serpent < 55ft"; //  
+    allItems[27]=" Number 8> 21ft"; // Number 8 first turn right 
+    allItems[28]=" Number 8> 34ft"; // 
+    allItems[29]=" Number 8> 55ft"; //  
+    allItems[30]=" Number 8< 21ft"; // Number 8 first turn left 
+    allItems[31]=" Number 8< 34ft"; // 
+    allItems[32]=" Number 8< 55ft"; //  
+    allItems[33]=" Shutdown";
+    allItems[34]=" Reset"; 
 
   };
 
   TwoElms* Menu::valueAtCurrentPosition() {
     TwoElms* theTwoElements = new TwoElms();
 
-    strncpy(theTwoElements->line1, allItems.at(idx1), 16);
-    strncpy(theTwoElements->line2, allItems.at(idx2), 16);
+    strncpy(theTwoElements->line1, allItems[idx1], 16);
+    strncpy(theTwoElements->line2, allItems[idx2], 16);
     
     theTwoElements->line1[0] = MARKER;
     
@@ -52,33 +55,41 @@
   };
 
   TwoElms* Menu::moveUp() {
+    bool isJumpedOver = false;
     crntPos--;
     if(crntPos < 0) { 
       crntPos = size()-1;
       idx1 = crntPos;
       idx2 = 0;
+      isJumpedOver = true;
     } else {
       idx1 = crntPos;
       idx2 = idx1 + 1;     
     }
+    TwoElms* retTwoElems = valueAtCurrentPosition();
+    retTwoElems->isJumpedOver = isJumpedOver; 
+    return retTwoElems;
   };
 
   TwoElms* Menu::moveDown(){
+    bool isJumpedOver = false;
     crntPos++;
     if(crntPos > size()-2) {
       crntPos = 0;
       idx1 = size()-1;
       idx2 = 0;
+      isJumpedOver = true;
     } else {
       idx1 = crntPos;
       idx2 = idx1 + 1;     
     }
-    
-    if(crntPos > allItems.size()-1) crntPos=0;   
+    TwoElms* retTwoElems = valueAtCurrentPosition();
+    retTwoElems->isJumpedOver = isJumpedOver; 
+    return retTwoElems;
   };
 
   int Menu::size() {
-     return allItems.size();
+     return SIZE;
   };
 
   

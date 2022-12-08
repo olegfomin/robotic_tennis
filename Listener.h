@@ -31,6 +31,7 @@ class BtnLisr : public Listener {
     Lcd16x2* lcd16x2;
   public:
     BtnLisr(Menu* menu, Lcd16x2* lcd16x2);
+    virtual void onEvent(unsigned int tn, char* entryName, char* param);
 };
 
 /* When the button UP is pushed this listener receives onEvent(...)*/

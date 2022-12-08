@@ -16,11 +16,11 @@
  *  elm  - element
  *  engd - engaged
  *  idx  - index
+ *  inrl - interval
  *  lisr - listener
  *  mk   - make
  *  momr - momentary
  *  nm   - name
- *  oble - Observable
  *  obsr - Observer
  *  pcn  - Pin Contact Number (Arduino or RPi depending on context)
  *  pos  - position 
@@ -30,6 +30,7 @@
  *  res  - result
  *  str  - string
  *  stat - static
+ *  subj - subject (Observable)
  *  swit - switch              
  *  tm   - time                
  *  tn   - tick number (counter that stores the number of times the Arduino loop() got called)
@@ -44,10 +45,8 @@
 #include "Setup.h"
 #include "Menu.h"
 #include "lcd16x2.h"
+#include "Subj.h"
 
-/*ReliableButton* rbUp = new ReliableButton(buttonUp); 
-ReliableButton* rbEnter = new ReliableButton(buttonEnter); 
-ReliableButton* rbDown = new ReliableButton(buttonDown);*/
 Menu* menu = new Menu(); 
 Lcd16x2* lcd = new Lcd16x2();
 
@@ -56,13 +55,16 @@ MomrSwitLisr* momrSwitLisr52 = new MomrSwitLisr(52);
 TmLisrEnt* tmLisrEnt52 = new TmLisrEnt("LED52", 1000, 250, momrSwitLisr52); 
 
 MomrSwitLisr* momrSwitLisr49 = new MomrSwitLisr(49);
-TmLisrEnt*    tmLisrEnt49 = new TmLisrEnt("LED49", 50, momrSwitLisr49);
+TmLisrEnt*    tmLisrEnt49 = new TmLisrEnt("LED49", 500, momrSwitLisr49);
 
 BtnUpLisr* btnUpLisr     = new BtnUpLisr(menu, lcd);
 BtnDownLisr* btnDownLisr = new BtnDownLisr(menu, lcd);
 BtnEnrLisr* btnEnrLisr   = new BtnEnrLisr(menu, lcd);
+Subj* subject = new Subj(); 
 
 unsigned int tickCntr = 0;
+
+int buttonState = 0;
 
 void setup() {
 tmLisrEnt52->activate();
@@ -72,7 +74,9 @@ tmLisrReg->regEntry(tmLisrEnt49);
 TmLisrEnt* timeEntry = tmLisrReg->findByName("LED52");
 if(timeEntry != NULL) timeEntry->activate(5);
 
-
+subject->reg(9, 500, btnUpLisr);
+subject->reg(10,500, btnEnrLisr);
+subject->reg(11,500, btnDownLisr);
 
 /*tmLisrEnt49->activate();
 */
@@ -164,33 +168,20 @@ if(timeEntry != NULL) timeEntry->activate(5);
  *   ---------> *                                    *         *
  *              **************************************         *
 /***************************************************************/
+subject->setup();
+/*lcd->setLine1(">To From 8ft");
+lcd->setLine2(" To From 13ft");
+lcd->render();*/
 
-  attachInterrupt(digitalPinToInterrupt(9),  onUpBtnPrs, RISING);   // Top button (Up)
+/*  attachInterrupt(digitalPinToInterrupt(9),  onUpBtnPrs, RISING);   // Top button (Up)
   attachInterrupt(digitalPinToInterrupt(10), onEnrBtnPrs, RISING);  // Middle button (enter)
-  attachInterrupt(digitalPinToInterrupt(11), onDownBtnPrs, RISING); // Bottom button (down)
-
-/*  pinMode(8, OUTPUT);
-  digitalWrite(8, HIGH);   // turn the LED on (HIGH is the voltage level)
-  delay(1000); */    
-  
+  attachInterrupt(digitalPinToInterrupt(11), onDownBtnPrs, RISING); // Bottom button (down) */
 
 }
 
 void loop() {
-  
   tmLisrReg->feed(tickCntr);
+  subject->feed(tickCntr);
   tickCntr++;
-  delay(5);
-}
-
-void onUpBtnPrs() {
-  btnUpLisr->onEvent(tickCntr, "UpButton", "");
-}
-
-void onEnrBtnPrs() {
-  btnEnrLisr->onEvent(tickCntr, "EnterButton", "");
-}
-
-void onDownBtnPrs() {
-  btnDownLisr->onEvent(tickCntr, "DownButton", "");
+  delay(1); 
 }
