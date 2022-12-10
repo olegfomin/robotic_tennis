@@ -12,6 +12,7 @@ class TmLisrReg {
     int size = 0;
   public:  
     TmLisrReg();
+    void setup();
     bool regEntry(TmLisrEnt* tmLisrEnt);
     void feed(unsigned int tn);
     /* Finding the entry by a unique name */

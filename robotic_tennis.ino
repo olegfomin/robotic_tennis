@@ -142,6 +142,7 @@ subject->reg(11,500, btnDownLisr);
   
 
   Serial.begin(9600); // Debugging UART
+  delay(1000);
   Serial3.begin(9600); //Menu's Lcd16x2 UART
   delay(1000);
   
@@ -169,9 +170,7 @@ subject->reg(11,500, btnDownLisr);
  *              **************************************         *
 /***************************************************************/
 subject->setup();
-/*lcd->setLine1(">To From 8ft");
-lcd->setLine2(" To From 13ft");
-lcd->render();*/
+
 
 /*  attachInterrupt(digitalPinToInterrupt(9),  onUpBtnPrs, RISING);   // Top button (Up)
   attachInterrupt(digitalPinToInterrupt(10), onEnrBtnPrs, RISING);  // Middle button (enter)
@@ -180,8 +179,17 @@ lcd->render();*/
 }
 
 void loop() {
-  tmLisrReg->feed(tickCntr);
+  Serial.println("Before the render ");
+
+/*  lcd->setLine1(">To From 8ft");
+  lcd->setLine2(" To From 13ft");
+  lcd->render();*/
+  delay(1000);
+  Serial3.print("Haha");
+  delay(1000);
+  
+/*  tmLisrReg->feed(tickCntr);
   subject->feed(tickCntr);
   tickCntr++;
-  delay(1); 
+  delay(1); */
 }

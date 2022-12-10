@@ -33,7 +33,7 @@ void Lcd16x2::backLit() {
 }
 
 void Lcd16x2::render() {
-  
+ 
   if(isDirty) {
      Serial3.write(12);
      delay(10);
