@@ -11,7 +11,7 @@
  *  cntr - counter
  *  conr - controller
  *  cmp  - compare
- *  enr  - enter
+ *  enr  - entry
  *  ent  - entry
  *  elm  - element
  *  engd - engaged
@@ -39,8 +39,8 @@
  *  
 */
 
-#include "TmLisrReg.h"
-#include "TmLisrEnt.h"
+#include "LisrReg.h"
+#include "LisrEnt.h"
 #include "Listener.h"
 #include "Setup.h"
 #include "Menu.h"
@@ -50,16 +50,10 @@
 Menu* menu = new Menu(); 
 Lcd16x2* lcd = new Lcd16x2();
 
-TmLisrReg* tmLisrReg = new TmLisrReg();
-MomrSwitLisr* momrSwitLisr52 = new MomrSwitLisr(52);
-TmLisrEnt* tmLisrEnt52 = new TmLisrEnt("LED52", 1000, 250, momrSwitLisr52); 
 
-MomrSwitLisr* momrSwitLisr49 = new MomrSwitLisr(49);
-TmLisrEnt*    tmLisrEnt49 = new TmLisrEnt("LED49", 500, momrSwitLisr49);
-
-BtnUpLisr* btnUpLisr     = new BtnUpLisr(menu, lcd);
-BtnDownLisr* btnDownLisr = new BtnDownLisr(menu, lcd);
-BtnEnrLisr* btnEnrLisr   = new BtnEnrLisr(menu, lcd);
+BtnUpLisr* btnUpLisr     = new BtnUpLisr(9, menu, lcd);
+BtnDownLisr* btnDownLisr = new BtnDownLisr(11, menu, lcd);
+BtnEnrLisr* btnEnrLisr   = new BtnEnrLisr(10, menu, lcd);
 Subj* subject = new Subj(); 
 
 unsigned int tickCntr = 0;
@@ -67,12 +61,15 @@ unsigned int tickCntr = 0;
 int buttonState = 0;
 
 void setup() {
-tmLisrEnt52->activate();
-tmLisrReg->regEntry(tmLisrEnt52);
-tmLisrReg->regEntry(tmLisrEnt49);
 
-TmLisrEnt* timeEntry = tmLisrReg->findByName("LED52");
-if(timeEntry != NULL) timeEntry->activate(5);
+LisrReg* lisrReg = new LisrReg();
+MomrSwitLisr* momrSwitLisr52 = new MomrSwitLisr(52);
+LisrEnt* tmLisrEnt52 = lisrReg->regTmEnr("LED52", 1000, 250, momrSwitLisr52);
+
+MomrSwitLisr* momrSwitLisr49 = new MomrSwitLisr(49);
+LisrEnt* tmLisrEnt49 = lisrReg->regTmEnr("LED49", 500, momrSwitLisr49);
+  
+tmLisrEnt52->activate();
 
 subject->reg(9, 500, btnUpLisr);
 subject->reg(10,500, btnEnrLisr);

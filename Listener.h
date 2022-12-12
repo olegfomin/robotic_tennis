@@ -7,18 +7,19 @@
 
 /* Set of Listener classes that are being invoked by the Observers as a result of some event like pushing of a button or certain time elapsed */
 class Listener {
+  protected: 
+    int pcn; // Pin Contact Number
   public:
+    Listener(int pcn);
     virtual void onEvent(unsigned int tickNumber, char* entryName, char* param); 
 };
 
 /* This listener acts like mometory switch and it invokes digitalWrite(pinContactNumber, HIGH) when param='0' thus period1 starts */
 class MomrSwitLisr : public Listener {
   private:
-    int pcn=0;
     char* zero = const_cast<char*>("0");
     char* one  = const_cast<char*>("1");
   public: 
-    MomrSwitLisr();
     MomrSwitLisr(int pinContactNumber);
     virtual void onEvent(unsigned int tn, char* entryName, char* param);
     ~MomrSwitLisr(); 
@@ -30,14 +31,14 @@ class BtnLisr : public Listener {
     Menu* menu;
     Lcd16x2* lcd16x2;
   public:
-    BtnLisr(Menu* menu, Lcd16x2* lcd16x2);
+    BtnLisr(int pcn, Menu* menu, Lcd16x2* lcd16x2);
     virtual void onEvent(unsigned int tn, char* entryName, char* param);
 };
 
 /* When the button UP is pushed this listener receives onEvent(...)*/
 class BtnUpLisr : public BtnLisr {
   public:
-    BtnUpLisr(Menu* menu, Lcd16x2* lcd16x2);  
+    BtnUpLisr(int pcn, Menu* menu, Lcd16x2* lcd16x2);  
     virtual void onEvent(unsigned int tn, char* entryName, char* param);
     ~BtnUpLisr();
 };
@@ -45,14 +46,14 @@ class BtnUpLisr : public BtnLisr {
 /* When the button DOWN is pushed this listener receives onEvent(...)*/
 class BtnDownLisr : public BtnLisr {
   public: 
-    BtnDownLisr(Menu* menu, Lcd16x2* lcd16x2);  
+    BtnDownLisr(int pcn, Menu* menu, Lcd16x2* lcd16x2);  
     virtual void onEvent(unsigned int tn, char* entryName, char* param);
 };
 
 /* when the button enter is pushed then this */ 
 class BtnEnrLisr : public BtnLisr {
   public:  
-    BtnEnrLisr(Menu* menu, Lcd16x2* lcd16x2);  
+    BtnEnrLisr(int pcn, Menu* menu, Lcd16x2* lcd16x2);  
     virtual void onEvent(unsigned int tn, char* entryName, char* param);
 };
 
