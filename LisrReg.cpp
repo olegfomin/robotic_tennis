@@ -1,5 +1,4 @@
 #include "LisrReg.h"
-#include "TmLisrEnt.h"
 
 LisrReg::LisrReg() {
   
@@ -16,6 +15,16 @@ LisrEnt* LisrReg::regTmEnr(const char* name, unsigned int onPrid, unsigned int d
 
 LisrEnt* LisrReg::regTmEnr(char* name, unsigned int onPrid, Listener* listener) {
   return regTmEnr(name, onPrid, onPrid, listener);
+}
+
+LisrEnt* LisrReg::regBtnEnr(char* name, int pcn, Listener* listener) {
+  BtnLisrEnt* lisrEnt = NULL; 
+  if(size < 64) {
+    lisrEnt = new BtnLisrEnt(name, pcn, 50, listener); // deaf period is found empirically 
+    lisrArr[size] = lisrEnt;
+    size++;
+  }
+  return lisrEnt; 
 }
 
 void LisrReg::feed(unsigned int tn) {

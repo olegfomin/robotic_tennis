@@ -5,6 +5,10 @@ Listener::Listener(int pcn) {
   this->pcn = pcn;
 }
 
+int Listener::getPcn() {
+  return pcn;
+}
+
 void Listener::onEvent(unsigned int tickNumber, char* entryName, char* param) {
   Serial.println(entryName);
   Serial.println("Got Trigerred! That is an unwanted behaviour");

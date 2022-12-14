@@ -69,6 +69,10 @@ void TmLisrEnt::innerFeed(unsigned int tn) {
    };
 };
 
+void TmLisrEnt::setup() {
+  if(lisr != NULL) pinMode(lisr->getPcn(), OUTPUT);
+};
+
 /* Make entry susceptible to feedTick method that calls the listener */
 void TmLisrEnt::activate() {
   howMany = INT_MAX;
@@ -91,4 +95,25 @@ void TmLisrEnt::deactivate() {
 
 TmLisrEnt::~TmLisrEnt() {
   // Nothing to do here yet
+};
+
+BtnLisrEnt::BtnLisrEnt(const char* entNm, int pcn, unsigned int deafIntl, Listener* lisr) : LisrEnt(entNm, deafIntl, lisr) {
+  this->pcn = pcn;
+}
+
+void BtnLisrEnt::setup() {
+  if(lisr != NULL) pinMode(lisr->getPcn(), INPUT);
+}
+
+void BtnLisrEnt::innerFeed(unsigned int tn) {
+  int pin = this->pcn;
+  int value = digitalRead(pin);
+  if(value == HIGH) {
+    if(tn > this->when) {
+      char* pchar="          ";
+      itoa(pin, pchar, 10);
+      this->lisr->onEvent(tn, pchar, "HIGH");
+      this->when = tn+deafIntl;
+    };
+  };  
 }

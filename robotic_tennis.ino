@@ -45,7 +45,6 @@
 #include "Setup.h"
 #include "Menu.h"
 #include "lcd16x2.h"
-#include "Subj.h"
 
 Menu* menu = new Menu(); 
 Lcd16x2* lcd = new Lcd16x2();
@@ -54,7 +53,6 @@ Lcd16x2* lcd = new Lcd16x2();
 BtnUpLisr* btnUpLisr     = new BtnUpLisr(9, menu, lcd);
 BtnDownLisr* btnDownLisr = new BtnDownLisr(11, menu, lcd);
 BtnEnrLisr* btnEnrLisr   = new BtnEnrLisr(10, menu, lcd);
-Subj* subject = new Subj(); 
 
 unsigned int tickCntr = 0;
 
@@ -71,9 +69,6 @@ LisrEnt* tmLisrEnt49 = lisrReg->regTmEnr("LED49", 500, momrSwitLisr49);
   
 tmLisrEnt52->activate();
 
-subject->reg(9, 500, btnUpLisr);
-subject->reg(10,500, btnEnrLisr);
-subject->reg(11,500, btnDownLisr);
 
 /*tmLisrEnt49->activate();
 */
@@ -166,7 +161,6 @@ subject->reg(11,500, btnDownLisr);
  *   ---------> *                                    *         *
  *              **************************************         *
 /***************************************************************/
-subject->setup();
 
 
 /*  attachInterrupt(digitalPinToInterrupt(9),  onUpBtnPrs, RISING);   // Top button (Up)

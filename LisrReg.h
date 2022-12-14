@@ -18,6 +18,8 @@ class LisrReg {
     LisrEnt* regTmEnr(const char* name, unsigned int onPrid, unsigned int deafPrid, Listener* listener);
     /* This constuctor takes only on time periods, that makes 'on-period' and 'off-period' to be equal */
     LisrEnt* regTmEnr(char* name, unsigned int onPrid, Listener* listener);
+    /* creates a handler record for a button */
+    LisrEnt* regBtnEnr(char* name, int pcn, Listener* listener);
     void feed(unsigned int tn);
     /* Finding the entry by a unique name */
     LisrEnt* findByName(char const *entNm);    

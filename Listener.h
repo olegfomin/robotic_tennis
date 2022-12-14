@@ -11,6 +11,7 @@ class Listener {
     int pcn; // Pin Contact Number
   public:
     Listener(int pcn);
+    int getPcn();
     virtual void onEvent(unsigned int tickNumber, char* entryName, char* param); 
 };
 
