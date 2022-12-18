@@ -41,6 +41,7 @@ class TmLisrEnt : public LisrEnt {
   protected:
      virtual void innerFeed(unsigned int tn);   
   public:
+    TmLisrEnt(const char* timeEntryName, Listener* listener); // The timer is infinity, it shall never flip by itself
     TmLisrEnt(const char* timeEntryName, unsigned int period, Listener* listener); // constructor with 'symmetrical' periods
     TmLisrEnt(const char* timeEntryName, unsigned int period1, unsigned int period2, Listener* listener); // constructor with 'non-symmetrical' periods
     char* getEntNm();

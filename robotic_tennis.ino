@@ -15,6 +15,7 @@
  *  ent  - entry
  *  elm  - element
  *  engd - engaged
+ *  frnt - front
  *  idx  - index
  *  inrl - interval
  *  lisr - listener
@@ -46,29 +47,17 @@
 #include "Menu.h"
 #include "lcd16x2.h"
 
-Menu* menu = new Menu(); 
-Lcd16x2* lcd = new Lcd16x2();
-
-
-BtnUpLisr* btnUpLisr     = new BtnUpLisr(9, menu, lcd);
-BtnDownLisr* btnDownLisr = new BtnDownLisr(11, menu, lcd);
-BtnEnrLisr* btnEnrLisr   = new BtnEnrLisr(10, menu, lcd);
-
 unsigned int tickCntr = 0;
-
-int buttonState = 0;
 
 void setup() {
 
-LisrReg* lisrReg = new LisrReg();
-MomrSwitLisr* momrSwitLisr52 = new MomrSwitLisr(52);
-LisrEnt* tmLisrEnt52 = lisrReg->regTmEnr("LED52", 1000, 250, momrSwitLisr52);
+Serial.begin(9600); // Debugging UART
+delay(1000);
+Serial3.begin(9600); //Menu's Lcd16x2 UART
+delay(1000);
 
-MomrSwitLisr* momrSwitLisr49 = new MomrSwitLisr(49);
-LisrEnt* tmLisrEnt49 = lisrReg->regTmEnr("LED49", 500, momrSwitLisr49);
-  
-tmLisrEnt52->activate();
-
+LisrReg* lisrReg = setupEnv();
+lisrReg->setup(); // It supposed to register all PINs involved
 
 /*tmLisrEnt49->activate();
 */
@@ -82,7 +71,6 @@ tmLisrEnt52->activate();
 /*   |    |  */ 
 /*   52---   */
 /*************/  
-  pinMode(52, OUTPUT); // Rear Left
 
 /*   ------  */
 /*   |    |  */
@@ -90,7 +78,6 @@ tmLisrEnt52->activate();
 /*   |    |  */
 /*   |    |  */ 
 /*   ----49  */
-  pinMode(49, OUTPUT); // Rear Right
 
 /*   -----51 */
 /*   |    |  */
@@ -98,7 +85,6 @@ tmLisrEnt52->activate();
 /*   |    |  */
 /*   |    |  */ 
 /*   ------  */
-  pinMode(51, OUTPUT); // Head Right
 
 /*  50-----  */
 /*   |    |  */
@@ -106,7 +92,6 @@ tmLisrEnt52->activate();
 /*   |    |  */
 /*   |    |  */ 
 /*   ------  */  
-  pinMode(50, OUTPUT); // Head Left
 
 /* Relay to PIN Map: 
 -------------
@@ -126,20 +111,8 @@ tmLisrEnt52->activate();
      ^ ^    ^ ^
      | |    | | 
 */  
-  pinMode(8, OUTPUT); // Rapberry Pi Power Relay (R5)
-  pinMode(7, OUTPUT); // The Arduino Due Power Relay (R4)
-  pinMode(6, OUTPUT); // The Motor power Relay (R3)
-  pinMode(5, OUTPUT); // The Reserved R2 Relay (Speakers?)
 
   
-
-  Serial.begin(9600); // Debugging UART
-  delay(1000);
-  Serial3.begin(9600); //Menu's Lcd16x2 UART
-  delay(1000);
-  
-
-//  lcd->init();
 
 
 /**************************************************************/
@@ -161,11 +134,6 @@ tmLisrEnt52->activate();
  *   ---------> *                                    *         *
  *              **************************************         *
 /***************************************************************/
-
-
-/*  attachInterrupt(digitalPinToInterrupt(9),  onUpBtnPrs, RISING);   // Top button (Up)
-  attachInterrupt(digitalPinToInterrupt(10), onEnrBtnPrs, RISING);  // Middle button (enter)
-  attachInterrupt(digitalPinToInterrupt(11), onDownBtnPrs, RISING); // Bottom button (down) */
 
 }
 

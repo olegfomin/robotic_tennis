@@ -24,7 +24,7 @@ void MomrSwitLisr::onEvent(unsigned int tn, char* entryName, char* param) {
   digitalWrite(pcn, result==0 ? HIGH : LOW);
 }
 
-BtnLisr::BtnLisr(int pcn, Menu* menu, Lcd16x2* lcd16x2) : Listener(pcn) {
+BtnLisr::BtnLisr(unsigned int pcn, Menu* menu, Lcd16x2* lcd16x2) : Listener(pcn) {
 /*  Serial.println("Pre-Before");
   delay(500);
   this->menu = menu;

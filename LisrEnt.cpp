@@ -37,6 +37,11 @@ void LisrEnt::setup() {
   
 }
 
+/* We use deafIntl as switch off period */
+TmLisrEnt::TmLisrEnt(const char* timeEntryName, Listener* listener) : LisrEnt(timeEntryName, INT_MAX, listener) {
+  this->period1 = INT_MAX;
+};
+
      // Making a time entry with symmetrical period
 TmLisrEnt::TmLisrEnt(const char* timeEntryName, unsigned int period, Listener* listener) : LisrEnt(timeEntryName, period, listener) {
   this->period1 = period;
@@ -71,6 +76,10 @@ void TmLisrEnt::innerFeed(unsigned int tn) {
 
 void TmLisrEnt::setup() {
   if(lisr != NULL) pinMode(lisr->getPcn(), OUTPUT);
+  Serial.print("pinMode(");
+  Serial.print(lisr->getPcn());
+  Serial.println(", OUTPUT)");
+  delay(1000);
 };
 
 /* Make entry susceptible to feedTick method that calls the listener */
@@ -103,6 +112,11 @@ BtnLisrEnt::BtnLisrEnt(const char* entNm, int pcn, unsigned int deafIntl, Listen
 
 void BtnLisrEnt::setup() {
   if(lisr != NULL) pinMode(lisr->getPcn(), INPUT);
+  Serial.print("pinMode(");
+  Serial.print(lisr->getPcn());
+  Serial.println(", INPUT)");
+  delay(1000);
+
 }
 
 void BtnLisrEnt::innerFeed(unsigned int tn) {

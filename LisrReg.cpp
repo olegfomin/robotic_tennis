@@ -17,17 +17,24 @@ LisrEnt* LisrReg::regTmEnr(char* name, unsigned int onPrid, Listener* listener) 
   return regTmEnr(name, onPrid, onPrid, listener);
 }
 
-LisrEnt* LisrReg::regBtnEnr(char* name, int pcn, Listener* listener) {
+LisrEnt* LisrReg::regTmEnr(char* name, Listener* listener) {
+  return regTmEnr(name, INT_MAX, INT_MAX, listener);
+}
+
+
+LisrEnt* LisrReg::regBtnEnr(char* name, unsigned int pcn, Listener* listener) {
   BtnLisrEnt* lisrEnt = NULL; 
   if(size < 64) {
     lisrEnt = new BtnLisrEnt(name, pcn, 50, listener); // deaf period is found empirically 
     lisrArr[size] = lisrEnt;
     size++;
   }
+ 
   return lisrEnt; 
 }
 
 void LisrReg::feed(unsigned int tn) {
+ 
   for(int i=0; i < size; i++) {
       lisrArr[i]->feed(tn);
   };
@@ -35,7 +42,7 @@ void LisrReg::feed(unsigned int tn) {
 
 void LisrReg::setup() {
   for(int i=0; i < size; i++) {
-      lisrArr[i]->setup();
+     lisrArr[i]->setup();
   };
 };
 

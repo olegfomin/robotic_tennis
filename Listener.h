@@ -32,7 +32,7 @@ class BtnLisr : public Listener {
     Menu* menu;
     Lcd16x2* lcd16x2;
   public:
-    BtnLisr(int pcn, Menu* menu, Lcd16x2* lcd16x2);
+    BtnLisr(unsigned int pcn, Menu* menu, Lcd16x2* lcd16x2);
     virtual void onEvent(unsigned int tn, char* entryName, char* param);
 };
 
